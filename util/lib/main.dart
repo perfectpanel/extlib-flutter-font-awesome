@@ -5,9 +5,9 @@ import 'dart:io';
 
 import 'package:ansicolor/ansicolor.dart';
 import 'package:args/args.dart';
+import 'package:pub_semver/pub_semver.dart' as pub;
 import 'package:recase/recase.dart';
 import 'package:version/version.dart';
-import 'package:pub_semver/pub_semver.dart' as pub;
 
 /// A map which adjusts icon ids starting with a number
 ///
@@ -142,12 +142,6 @@ void main(List<String> rawArgs) async {
   writeCodeToFile(
     () => generateIconDefinitionClass(metadata, highestVersion),
     'lib/font_awesome_flutter.dart',
-  );
-
-  print(blue('\nGenerating example code'));
-  writeCodeToFile(
-    () => generateExamplesListClass(metadata),
-    'example/lib/icons.dart',
   );
 
   if (args['dynamic']) {
