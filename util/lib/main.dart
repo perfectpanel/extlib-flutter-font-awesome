@@ -155,7 +155,7 @@ void main(List<String> rawArgs) async {
     if (iconNameMappingFile.existsSync()) iconNameMappingFile.deleteSync();
   }
 
-  adjustPubspecFontIncludes(styles);
+  // adjustPubspecFontIncludes(styles);
 
   if (!hasCustomIconsJson) {
     iconsJson.deleteSync();
@@ -439,7 +439,10 @@ String normalizeIconName(String iconName, String style, int styleCompetitors) {
 
 /// Utility function to generate the correct 'IconData' subclass for a [style]
 String styleToDataSource(String style) {
-  return 'IconData${style[0].toUpperCase()}${style.substring(1)}';
+  final parts = style.split('-');
+  final className =
+      parts.map((p) => p[0].toUpperCase() + p.substring(1)).join();
+  return 'IconData$className';
 }
 
 /// Gets the default branch from github's metadata
