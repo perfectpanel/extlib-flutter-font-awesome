@@ -344,7 +344,7 @@ List<String> generateIconDefinitionClass(
     for (String style in icon.styles) {
       output.add(generateIconDocumentation(icon, style));
       output.add(generateIconDefinition(icon, style));
-      output.add(generateIconAliases(icon, style));
+      // output.add(generateIconAliases(icon, style));
     }
   }
 
@@ -582,6 +582,21 @@ bool readAndPickMetadata(File iconsJson, List<IconMetadata> metadata,
       iconStyles,
       aliases,
     ));
+
+    for (final alias in aliases) {
+      if (alias == 'try') {
+        print(yellow('skip "try" alias'));
+        continue;
+      }
+      metadata.add(IconMetadata(
+        alias,
+        icon['label'],
+        icon['unicode'],
+        searchTerms,
+        iconStyles,
+        [],
+      ));
+    }
   }
 
   return hasDuotoneIcons;
