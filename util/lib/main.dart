@@ -326,9 +326,7 @@ List<String> generateIconDefinitionClass(
     'library font_awesome_flutter;',
     '',
     "import 'package:flutter/widgets.dart';",
-    "import 'package:font_awesome_flutter/src/icon_data.dart';",
     "export 'package:font_awesome_flutter/src/fa_icon.dart';",
-    "export 'package:font_awesome_flutter/src/icon_data.dart';",
   ];
 
   output.addAll([
@@ -398,9 +396,9 @@ String generateIconDocumentation(IconMetadata icon, String style) {
 String generateIconDefinition(IconMetadata icon, String style) {
   var iconName = normalizeIconName(icon.name, style, icon.styles.length);
 
-  String iconDataSource = styleToDataSource(style);
+  String fontFamily = styleToFontFamily(style);
 
-  return 'static const IconData $iconName = $iconDataSource(0x${icon.unicode});';
+  return "static const IconData $iconName = IconData(0x${icon.unicode}, fontFamily: '$fontFamily');";
 }
 
 /// Generates aliases which link to the original icon. Used by
@@ -437,12 +435,12 @@ String normalizeIconName(String iconName, String style, int styleCompetitors) {
   return iconName.camelCase;
 }
 
-/// Utility function to generate the correct 'IconData' subclass for a [style]
-String styleToDataSource(String style) {
+/// Utility function to generate the correct font family for a [style]
+String styleToFontFamily(String style) {
   final parts = style.split('-');
   final className =
       parts.map((p) => p[0].toUpperCase() + p.substring(1)).join();
-  return 'IconData$className';
+  return 'FontAwesome$className';
 }
 
 /// Gets the default branch from github's metadata
